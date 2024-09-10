@@ -1,3 +1,5 @@
+import generator from "./generator";
+
 /**
  * Хранилище состояния приложения
  */
@@ -44,7 +46,7 @@ class Store {
   addItem() {
     this.setState({
       ...this.state,
-      list: [...this.state.list, { code: this.state.list.length + 1, title: 'Новая запись' }],
+      list: [...this.state.list, { code: generator.next().value, title: 'Новая запись' }],
     });
   }
 
@@ -69,6 +71,15 @@ class Store {
       list: this.state.list.map(item => {
         if (item.code === code) {
           item.selected = !item.selected;
+          if(item.selected) { // Подсчет количества выделений элемента
+            if(item.quantity) {
+              item.quantity++;
+            } else {
+              item.quantity = 1;
+            }
+          }
+        } else { // Условие для сброса раннее выделенных записей при выделении еще одной записи
+          item.selected = false;
         }
         return item;
       }),
