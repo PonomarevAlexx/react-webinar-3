@@ -28,7 +28,10 @@ function App({ store }) {
                 onClick={() => store.selectItem(item.code)}
               >
                 <div className="Item-code">{item.code}</div>
-                <div className="Item-title">{item.title} {item.quantity && `| ${declination(item.quantity)}`}</div>
+                <div className="Item-title">
+                  {item.title}{' '}
+                  {item.quantity && `| Выделяли${declination(item.quantity, 'раз', 'раза', 'раз')}`}
+                </div>
                 <div className="Item-actions">
                   <button onClick={() => store.deleteItem(item.code)}>Удалить</button>
                 </div>

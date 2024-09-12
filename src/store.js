@@ -1,5 +1,3 @@
-import generator from "./generator";
-
 /**
  * Хранилище состояния приложения
  */
@@ -7,6 +5,7 @@ class Store {
   constructor(initState = {}) {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
+    this.maxCode = this.state.list.length;
   }
 
   /**
@@ -46,7 +45,7 @@ class Store {
   addItem() {
     this.setState({
       ...this.state,
-      list: [...this.state.list, { code: generator.next().value, title: 'Новая запись' }],
+      list: [...this.state.list, { code: ++this.maxCode, title: 'Новая запись' }],
     });
   }
 
