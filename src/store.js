@@ -1,11 +1,13 @@
-import { generateCode } from './utils';
-
 /**
  * Хранилище состояния приложения
  */
 class Store {
   constructor(initState = {}) {
-    this.state = initState;
+    this.state = {
+      ...initState,
+      cartList: [],
+      isOpenModal: false,
+    };
     this.listeners = []; // Слушатели изменений состояния
   }
 
@@ -41,48 +43,66 @@ class Store {
   }
 
   /**
-   * Добавление новой записи
+   * Добавление в корзину
+   * @param item {Object}
    */
-  addItem() {
-    this.setState({
-      ...this.state,
-      list: [...this.state.list, { code: generateCode(), title: 'Новая запись' }],
-    });
+  addItemToCartList(item) {
+    const itemIndex = this.state.cartList.findIndex(itemList => itemList.code === item.code);
+
+    if (itemIndex < 0) {
+      const newItem = {
+        ...item,
+        quantity: 1,
+      };
+
+      this.setState({
+        ...this.state,
+        cartList: [...this.state.cartList, newItem],
+      });
+    } else {
+      const newCartList = this.state.cartList.map((cartItem, index) => {
+        if (itemIndex === index) {
+          return {
+            ...cartItem,
+            quantity: cartItem.quantity + 1,
+          };
+        } else {
+          return cartItem;
+        }
+      });
+
+      this.setState({
+        ...this.state,
+        cartList: newCartList,
+      });
+    }
   }
 
   /**
    * Удаление записи по коду
    * @param code
    */
-  deleteItem(code) {
+  deleteItemFromCartList(code) {
     this.setState({
       ...this.state,
-      // Новый список, в котором не будет удаляемой записи
-      list: this.state.list.filter(item => item.code !== code),
+      cartList: this.state.cartList.filter(item => item.code !== code),
     });
   }
 
-  /**
-   * Выделение записи по коду
-   * @param code
-   */
-  selectItem(code) {
+  openModal() {
     this.setState({
       ...this.state,
-      list: this.state.list.map(item => {
-        if (item.code === code) {
-          // Смена выделения и подсчёт
-          return {
-            ...item,
-            selected: !item.selected,
-            count: item.selected ? item.count : item.count + 1 || 1,
-          };
-        }
-        // Сброс выделения если выделена
-        return item.selected ? { ...item, selected: false } : item;
-      }),
+      isOpenModal: true,
     });
   }
+
+  closeModal() {
+    this.setState({
+      ...this.state,
+      isOpenModal: false,
+    });
+  }
+
 }
 
 export default Store;
