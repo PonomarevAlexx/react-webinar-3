@@ -1,9 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import List from './components/list';
 import Controls from './components/controls';
 import Head from './components/head';
 import PageLayout from './components/page-layout';
 import Modal from './components/modal';
+import ModalLayout from './components/modal-layout';
 import { formatPrices } from './utils';
 
 /**
@@ -14,11 +15,17 @@ import { formatPrices } from './utils';
 function App({ store }) {
   const list = store.getState().list;
   const cartList = store.getState().cartList;
-  const isOpenModal = store.getState().isOpenModal;
+  const costAllGods = store.getState().costAllGods;
 
-  const costAllGods = formatPrices(
-    cartList.reduce((acc, item) => acc + item.price * item.quantity, 0),
-  );
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true)
+  }
+
+  const closeModal = () => {
+    setModalOpen(false)
+  }
 
   const callbacks = {
     addItemToCartList: useCallback(
@@ -34,14 +41,6 @@ function App({ store }) {
       },
       [store],
     ),
-
-    openModal: useCallback(() => {
-      store.openModal();
-    }, [store]),
-
-    closeModal: useCallback(() => {
-      store.closeModal();
-    }, [store]),
   };
 
   return (
@@ -49,19 +48,20 @@ function App({ store }) {
       <PageLayout>
         <Head title="Магазин" />
         <Controls
-          openModal={callbacks.openModal}
+          openModal={openModal}
           quantityUniqueProducts={cartList.length}
-          costAllGods={costAllGods}
+          costAllGods={formatPrices(costAllGods)}
         />
         <List list={list} addItemToCartList={callbacks.addItemToCartList} />
 
-        <Modal
-          cartList={cartList}
-          isOpenModal={isOpenModal}
-          closeModal={callbacks.closeModal}
-          deleteItemFromCartList={callbacks.deleteItemFromCartList}
-          costAllGods={costAllGods}
-        />
+        {isModalOpen && <ModalLayout>
+          <Modal
+            cartList={cartList}
+            closeModal={closeModal}
+            deleteItemFromCartList={callbacks.deleteItemFromCartList}
+            costAllGods={formatPrices(costAllGods)}
+          />
+        </ModalLayout>}
       </PageLayout>
     </>
   );

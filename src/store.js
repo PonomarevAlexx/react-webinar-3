@@ -6,7 +6,7 @@ class Store {
     this.state = {
       ...initState,
       cartList: [],
-      isOpenModal: false,
+      costAllGods: 0,
     };
     this.listeners = []; // Слушатели изменений состояния
   }
@@ -76,6 +76,8 @@ class Store {
         cartList: newCartList,
       });
     }
+
+    this.setCostAllGods();
   }
 
   /**
@@ -87,22 +89,16 @@ class Store {
       ...this.state,
       cartList: this.state.cartList.filter(item => item.code !== code),
     });
+
+    this.setCostAllGods();
   }
 
-  openModal() {
+  setCostAllGods() {
     this.setState({
       ...this.state,
-      isOpenModal: true,
+      costAllGods: this.state.cartList.reduce((acc, item) => acc + item.price * item.quantity, 0),
     });
   }
-
-  closeModal() {
-    this.setState({
-      ...this.state,
-      isOpenModal: false,
-    });
-  }
-
 }
 
 export default Store;
