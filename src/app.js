@@ -20,12 +20,13 @@ function App({ store }) {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
-    setModalOpen(true)
-  }
+    setModalOpen(true);
+  };
 
-  const closeModal = () => {
-    setModalOpen(false)
-  }
+  const closeModal = e => {
+    e.stopPropagation();
+    setModalOpen(false);
+  };
 
   const callbacks = {
     addItemToCartList: useCallback(
@@ -54,14 +55,16 @@ function App({ store }) {
         />
         <List list={list} addItemToCartList={callbacks.addItemToCartList} />
 
-        {isModalOpen && <ModalLayout>
-          <Modal
-            cartList={cartList}
-            closeModal={closeModal}
-            deleteItemFromCartList={callbacks.deleteItemFromCartList}
-            costAllGods={formatPrices(costAllGods)}
-          />
-        </ModalLayout>}
+        {isModalOpen && (
+          <ModalLayout>
+            <Modal
+              cartList={cartList}
+              closeModal={closeModal}
+              deleteItemFromCartList={callbacks.deleteItemFromCartList}
+              costAllGods={formatPrices(costAllGods)}
+            />
+          </ModalLayout>
+        )}
       </PageLayout>
     </>
   );

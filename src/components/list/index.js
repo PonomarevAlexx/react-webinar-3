@@ -3,20 +3,20 @@ import PropTypes from 'prop-types';
 import Item from '../item';
 import './style.css';
 import { cn } from '@bem-react/classname';
+import ItemModal from '../item-modal';
 
 function List({ list, addItemToCartList, deleteItemFromCartList, modalIsOpen }) {
   const List = cn('List');
-  
+
   return (
     <div className={List()}>
       {list.map(itemList => (
         <div key={itemList.code} className={List('item')}>
-          <Item
-            item={itemList}
-            addItemToCartList={addItemToCartList}
-            deleteItemFromCartList={deleteItemFromCartList}
-            modalIsOpen={modalIsOpen}
-          />
+          {modalIsOpen ? (
+            <ItemModal item={itemList} deleteItemFromCartList={deleteItemFromCartList} />
+          ) : (
+            <Item item={itemList} addItemToCartList={addItemToCartList} />
+          )}
         </div>
       ))}
     </div>
@@ -36,7 +36,7 @@ List.propTypes = {
 
 List.defaultProps = {
   addItemToCartList: () => {},
-  onSelectItem: () => {},
+  deleteItemFromCartList: () => {},
 };
 
 export default React.memo(List);

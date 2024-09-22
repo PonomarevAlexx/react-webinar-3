@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import { cn } from '@bem-react/classname';
 import { formatPrices } from '../../utils';
 import Button from '../button';
-import './style.css';
+import '../item/style.css';
 
-function Item(props) {
+function ItemModal(props) {
   const item = cn('Item');
 
   const callbacks = {
-    addItemToCartList: e => {
+    deleteItemFromCartList: e => {
       e.stopPropagation();
-      props.addItemToCartList(props.item);
+      props.deleteItemFromCartList(props.item.code);
     },
   };
 
@@ -21,24 +21,27 @@ function Item(props) {
       <div className={item('title')}>{props.item.title}</div>
       <div className={item('price')}>{`${formatPrices(props.item.price)} ₽`}</div>
       <div className={item('actions')}>
-        <Button onClick={callbacks.addItemToCartList}>Добавить</Button>
+        <>
+          <span>{`${props.item.quantity} шт`}</span>
+          <Button onClick={callbacks.deleteItemFromCartList}>Удалить</Button>
+        </>
       </div>
     </div>
   );
 }
 
-Item.propTypes = {
+ItemModal.propTypes = {
   item: PropTypes.shape({
     code: PropTypes.number,
     title: PropTypes.string,
     price: PropTypes.number,
     quantity: PropTypes.number,
   }).isRequired,
-  addItemToCartList: PropTypes.func,
+  deleteItemFromCartList: PropTypes.func,
 };
 
-Item.defaultProps = {
-  addItemToCartList: () => {},
+ItemModal.defaultProps = {
+  deleteItemFromCartList: () => {},
 };
 
-export default React.memo(Item);
+export default React.memo(ItemModal);

@@ -3,6 +3,7 @@ import './style.css';
 import PropTypes from 'prop-types';
 import Head from '../head';
 import List from '../list';
+import Button from '../button';
 import { cn } from '@bem-react/classname';
 
 function Modal({ cartList, closeModal, deleteItemFromCartList, costAllGods }) {
@@ -12,9 +13,9 @@ function Modal({ cartList, closeModal, deleteItemFromCartList, costAllGods }) {
     <div className={modal()}>
       <div className={modal('content')}>
         <Head title="Корзина" />
-        <button onClick={closeModal} className={modal('close')}>
+        <Button onClick={closeModal} className={modal('close')}>
           Закрыть
-        </button>
+        </Button>
         <div className={modal('list')}>
           {cartList.length > 0 ? (
             <List

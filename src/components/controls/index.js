@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { plural } from '../../utils';
 import './style.css';
 import { cn } from '@bem-react/classname';
+import Button from '../button';
 
 function Controls({ openModal, quantityUniqueProducts, costAllGods }) {
   const controls = cn('Controls');
@@ -21,7 +22,7 @@ function Controls({ openModal, quantityUniqueProducts, costAllGods }) {
       ) : (
         <strong>пусто</strong>
       )}
-      <button onClick={openModal}>Перейти</button>
+      <Button onClick={openModal}>Перейти</Button>
     </div>
   );
 }
