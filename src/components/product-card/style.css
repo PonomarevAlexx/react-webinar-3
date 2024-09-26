@@ -1,0 +1,21 @@
+.product-card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 18px;
+    margin: 20px 40px 0;
+}
+
+.product-card span {
+    font-weight: bold;
+}
+
+.product-card-btn {
+    height: 21px;
+    width: 76px;
+}
+
+.product-card-price {
+    font-size: 24px;
+    font-weight: bold;
+}
