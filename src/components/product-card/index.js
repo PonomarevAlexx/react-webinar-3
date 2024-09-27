@@ -4,25 +4,25 @@ import PropTypes from 'prop-types';
 import './style.css';
 import { cn } from '@bem-react/classname';
 
-function ProductCard({ productInfo, addToBasket = () => {} }) {
+function ProductCard({ productInfo, addToBasket = () => {}, localText }) {
   const productCard = cn('product-card');
 
   return (
     <div className={productCard()}>
       <div className={productCard('description')}>{productInfo.description}</div>
       <div className={productCard('country')}>
-        Страна производитель:{' '}
+        {localText.countryOrigin}:{' '}
         <span>{`${productInfo.madeIn?.title} (${productInfo.madeIn?.code})`}</span>{' '}
       </div>
       <div className={productCard('category')}>
-        Категория: <span>{productInfo.category?.title}</span>{' '}
+        {localText.category}: <span>{productInfo.category?.title}</span>{' '}
       </div>
       <div className={productCard('year')}>
-        Год выпуска: <span>{productInfo.edition}</span>{' '}
+        {localText.yearManufacture}: <span>{productInfo.edition}</span>{' '}
       </div>
-      <div className={productCard('price')}>Цена: {productInfo.price} ₽</div>
+      <div className={productCard('price')}>{localText.price}: {productInfo.price} ₽</div>
       <button className={productCard('btn')} onClick={() => addToBasket(productInfo._id)}>
-        Добавить
+        {localText.add}
       </button>
     </div>
   );

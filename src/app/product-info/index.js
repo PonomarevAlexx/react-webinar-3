@@ -10,7 +10,7 @@ import useSelector from '../../store/use-selector';
 function ProductInfo() {
   const store = useStore();
   const { id } = useParams();
-  
+
   useEffect(() => {
     store.actions.product.productLoad(id);
   }, [id]);
@@ -18,6 +18,7 @@ function ProductInfo() {
   const select = useSelector(state => ({
     productItem: state.product.productItem,
     amount: state.basket.amount,
+    localText: state.languages.text[state.languages.currentLanguage],
     sum: state.basket.sum,
   }));
 
@@ -26,13 +27,22 @@ function ProductInfo() {
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
     // Открытие модалки корзины
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
-  }
+  };
 
   return (
     <PageLayout>
       <Head title={select.productItem?.title} />
-      <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum}/>
-      <ProductCard productInfo={select.productItem} addToBasket={callbacks.addToBasket}/>
+      <BasketTool
+        onOpen={callbacks.openModalBasket}
+        amount={select.amount}
+        sum={select.sum}
+        localText={select.localText}
+      />
+      <ProductCard
+        productInfo={select.productItem}
+        addToBasket={callbacks.addToBasket}
+        localText={select.localText}
+      />
     </PageLayout>
   );
 }

@@ -13,6 +13,7 @@ function Basket() {
     list: state.basket.list,
     amount: state.basket.amount,
     sum: state.basket.sum,
+    localText: state.languages.text[state.languages.currentLanguage],
   }));
 
   const callbacks = {
@@ -25,16 +26,27 @@ function Basket() {
   const renders = {
     itemBasket: useCallback(
       item => {
-        return <ItemBasket item={item} onClose={callbacks.closeModal}  onRemove={callbacks.removeFromBasket} />;
+        return (
+          <ItemBasket
+            item={item}
+            onClose={callbacks.closeModal}
+            onRemove={callbacks.removeFromBasket}
+            localText={select.localText}
+          />
+        );
       },
       [callbacks.removeFromBasket],
     ),
   };
 
   return (
-    <ModalLayout title="Корзина" onClose={callbacks.closeModal}>
+    <ModalLayout
+      title={select.localText.titleBasket}
+      onClose={callbacks.closeModal}
+      localText={select.localText}
+    >
       <List list={select.list} renderItem={renders.itemBasket} />
-      <BasketTotal sum={select.sum} />
+      <BasketTotal sum={select.sum} localText={select.localText} />
     </ModalLayout>
   );
 }
