@@ -20,7 +20,9 @@ function ProductCard({ productInfo, addToBasket = () => {}, localText }) {
       <div className={productCard('year')}>
         {localText.yearManufacture}: <span>{productInfo.edition}</span>{' '}
       </div>
-      <div className={productCard('price')}>{localText.price}: {productInfo.price} ₽</div>
+      <div className={productCard('price')}>
+        {localText.price}: {productInfo.price} ₽
+      </div>
       <button className={productCard('btn')} onClick={() => addToBasket(productInfo._id)}>
         {localText.add}
       </button>

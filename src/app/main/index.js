@@ -7,7 +7,6 @@ import List from '../../components/list';
 import useStore from '../../store/use-store';
 import useSelector from '../../store/use-selector';
 import Panigation from '../../components/panigation';
-import LangBtn from '../../components/lang-btn';
 
 function Main() {
   const store = useStore();
@@ -22,23 +21,22 @@ function Main() {
     sum: state.basket.sum,
     count: state.catalog.count,
     activePage: state.catalog.activePage,
-    currentLanguage: state.languages.currentLanguage,
     localText: state.languages.text[state.languages.currentLanguage],
+    pageSize: state.catalog.limit,
   }));
 
   const callbacks = {
     // Добавление в корзину
-    addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
+    addToBasket: useCallback(id => store.actions.basket.addToBasket(id), [store]),
     // Открытие модалки корзины
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
     setActivePage: useCallback(page => store.actions.catalog.load(page), [store]),
-    changeLanguage: useCallback(lang => store.actions.languages.setLanguages(lang), [store]),
   };
 
   const renders = {
     item: useCallback(
       item => {
-        return <Item item={item} onAdd={callbacks.addToBasket} localText={select.localText} />;
+        return <Item item={item} link={`/product/${item._id}`} onAdd={callbacks.addToBasket} localText={select.localText} />;
       },
       [callbacks.addToBasket, select.localText],
     ),
@@ -46,12 +44,7 @@ function Main() {
 
   return (
     <PageLayout>
-      <Head title={select.localText.titleShop}>
-        <LangBtn
-          changeLanguage={callbacks.changeLanguage}
-          currentLanguage={select.currentLanguage}
-        />
-      </Head>
+      <Head title={select.localText.titleShop}></Head>
       <BasketTool
         onOpen={callbacks.openModalBasket}
         amount={select.amount}
@@ -62,7 +55,7 @@ function Main() {
       <Panigation
         currentPage={select.activePage}
         totalCount={select.count}
-        pageSize={10}
+        pageSize={select.pageSize}
         onPageChange={callbacks.setActivePage}
       />
     </PageLayout>

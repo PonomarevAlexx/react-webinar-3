@@ -12,7 +12,6 @@ class Product extends StoreModule {
       `/api/v1/articles/${id}?fields=*,madeIn(title,code),category(title)`,
     );
     const json = await response.json();
-    console.log(json.result)
     this.setState(
       {
         ...this.getState(),

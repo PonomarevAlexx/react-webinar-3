@@ -29,6 +29,7 @@ function Basket() {
         return (
           <ItemBasket
             item={item}
+            link={`/product/${item._id}`}
             onClose={callbacks.closeModal}
             onRemove={callbacks.removeFromBasket}
             localText={select.localText}

@@ -17,17 +17,15 @@ function ItemBasket(props) {
   return (
     <div className={cn()}>
       <div className={cn('title')}>
-        <Link
-          onClick={callbacks.closeModal}
-          className={cn('link')}
-          to={`product/${props.item._id}`}
-        >
+        <Link onClick={callbacks.closeModal} className={cn('link')} to={props.link}>
           {props.item.title}
         </Link>
       </div>
       <div className={cn('right')}>
         <div className={cn('cell')}>{numberFormat(props.item.price)} ₽</div>
-        <div className={cn('cell')}>{numberFormat(props.item.amount || 0)} {props.localText.pcs}</div>
+        <div className={cn('cell')}>
+          {numberFormat(props.item.amount || 0)} {props.localText.pcs}
+        </div>
         <div className={cn('cell')}>
           <button onClick={callbacks.onRemove}>{props.localText.delete}</button>
         </div>
