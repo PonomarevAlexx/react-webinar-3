@@ -1,4 +1,13 @@
 {
+  "title.profile": "Профиль",
+  "title.login": "Вход",
+  "user.name": "Имя",
+  "user.phone": "Телефон",
+  "form.login": "Логин",
+  "form.password": "Пароль",
+  "form.btn": "Войти",
+  "btn.enter": "Вход",
+  "btn.exit": "Выход",
   "title": "Магазин",
   "menu.main": "Главная",
   "basket.title": "Корзина",

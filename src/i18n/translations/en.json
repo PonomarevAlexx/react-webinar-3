@@ -1,4 +1,13 @@
 {
+  "title.profile": "Profile",
+  "title.login": "Login",
+  "user.name": "Name",
+  "user.phone": "Phone",
+  "form.login": "Login",
+  "form.password": "Password",
+  "form.btn": "Enter",
+  "btn.enter": "Enter",
+  "btn.exit": "Exit",
   "title": "Shop",
   "menu.main": "Main",
   "basket.title": "Cart",

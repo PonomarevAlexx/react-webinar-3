@@ -1,0 +1,13 @@
+.profile-card {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+
+.profile-card-item {
+    margin-bottom: 20px;
+}
+
+.profile-card-item span {
+    font-weight: bold;
+}
