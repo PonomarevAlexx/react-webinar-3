@@ -8,18 +8,11 @@ import useTranslate from '../../hooks/use-translate';
 import LoginPanel from '../../components/login-panel';
 import useSelector from '../../hooks/use-selector';
 import { useNavigate } from 'react-router-dom';
-import useInit from '../../hooks/use-init';
-import useStore from '../../hooks/use-store';
 
 function Profile() {
   const { t } = useTranslate();
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
-  const store = useStore();
-
-  useInit(() => {
-    store.actions.user.getUser();
-  }, []);
 
   useEffect(() => {
     if (!token) {
