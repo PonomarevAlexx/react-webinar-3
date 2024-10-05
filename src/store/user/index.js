@@ -32,9 +32,8 @@ class UserState extends StoreModule {
       }
 
       const json = await res.json();
-
       this.setState({
-        name: json.result?.user.username,
+        name: json.result?.user.profile.name,
         phone: json.result?.user.profile.phone,
         email: json.result?.user.email,
         token: json.result?.token,
@@ -68,6 +67,11 @@ class UserState extends StoreModule {
         },
       });
 
+      if (!res.ok) {
+        const { error } = await res.json();
+        throw new Error(error.message);
+      }
+
       this.setState({
         name: '',
         phone: '',
@@ -99,12 +103,17 @@ class UserState extends StoreModule {
         },
       });
 
+      if (!res.ok) {
+        const { error } = await res.json();
+        throw new Error(error.message);
+      }
+
       const json = await res.json();
       this.setState({
-        name: json.result.user.username,
-        phone: json.result.user.profile.phone,
-        email: json.result.user.email,
-        token: json.result.token,
+        name: json.result.profile.name,
+        phone: json.result.profile.phone,
+        email: json.result.email,
+        token: token,
         waiting: false,
         error: '',
       });

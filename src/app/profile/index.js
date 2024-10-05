@@ -15,7 +15,11 @@ function Profile() {
   const { t } = useTranslate();
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
+  const store = useStore();
 
+  useInit(() => {
+    store.actions.user.getUser();
+  }, []);
 
   useEffect(() => {
     if (!token) {

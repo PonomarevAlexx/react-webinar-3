@@ -7,9 +7,17 @@ import LocaleSelect from '../../containers/locale-select';
 import useTranslate from '../../hooks/use-translate';
 import LoginPanel from '../../components/login-panel';
 
+import useInit from '../../hooks/use-init';
+import useStore from '../../hooks/use-store';
 
 function Login() {
   const { t } = useTranslate();
+
+  const store = useStore();
+
+  useInit(() => {
+    store.actions.user.getUser();
+  },);
 
   return (
     <PageLayout>
