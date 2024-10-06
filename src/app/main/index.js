@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import useStore from '../../hooks/use-store';
 import useTranslate from '../../hooks/use-translate';
 import useInit from '../../hooks/use-init';
@@ -9,6 +9,7 @@ import CatalogFilter from '../../containers/catalog-filter';
 import CatalogList from '../../containers/catalog-list';
 import LocaleSelect from '../../containers/locale-select';
 import LoginPanel from '../../components/login-panel';
+import useSelector from '../../hooks/use-selector';
 
 /**
  * Главная страница - первичная загрузка каталога
@@ -24,11 +25,25 @@ function Main() {
     true,
   );
 
+  const callbacks = {
+    logOut: useCallback(() => store.actions.user.logOut(), [store]),
+  };
+
+  const select = useSelector(state => ({
+    name: state.user.name,
+    successfully: state.user.successfully,
+  }));
+
   const { t } = useTranslate();
 
   return (
     <PageLayout>
-      <LoginPanel />
+      <LoginPanel
+        t={t}
+        name={select.name}
+        successfully={select.successfully}
+        logOut={callbacks.logOut}
+      />
       <Head title={t('title')}>
         <LocaleSelect />
       </Head>

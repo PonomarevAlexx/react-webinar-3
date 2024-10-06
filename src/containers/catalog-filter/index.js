@@ -17,11 +17,11 @@ function CatalogFilter() {
     sort: state.catalog.params.sort,
     query: state.catalog.params.query,
     category: state.catalog.params.category,
-    categories: state.catalog.categories,
+    categories: state.category.categories,
   }));
 
   useEffect(() => {
-    store.actions.catalog.setCategories();
+    store.actions.category.setCategories();
   }, [store]);
 
   const callbacks = {
@@ -54,9 +54,14 @@ function CatalogFilter() {
 
   return (
     <SideLayout padding="medium">
-      <Select options={options.categories} value={select.category} onChange={callbacks.onCategory} />
+      <Select
+        options={options.categories}
+        value={select.category}
+        onChange={callbacks.onCategory}
+      />
       <Select options={options.sort} value={select.sort} onChange={callbacks.onSort} />
       <Input
+        theme={'big'}
         value={select.query}
         onChange={callbacks.onSearch}
         placeholder={'Поиск'}

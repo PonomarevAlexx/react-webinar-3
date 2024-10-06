@@ -26,6 +26,8 @@ function Article() {
   }, [params.id]);
 
   const select = useSelector(state => ({
+    name: state.user.name,
+    successfully: state.user.successfully,
     article: state.article.data,
     waiting: state.article.waiting,
   }));
@@ -35,11 +37,17 @@ function Article() {
   const callbacks = {
     // Добавление в корзину
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
+    logOut: useCallback(() => store.actions.user.logOut(), [store]),
   };
 
   return (
     <PageLayout>
-      <LoginPanel />
+      <LoginPanel
+        t={t}
+        name={select.name}
+        successfully={select.successfully}
+        logOut={callbacks.logOut}
+      />
       <Head title={select.article.title}>
         <LocaleSelect />
       </Head>

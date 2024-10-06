@@ -20,21 +20,7 @@ class CatalogState extends StoreModule {
       },
       count: 0,
       waiting: false,
-      categories: [],
     };
-  }
-
-  async setCategories() {
-    const res = await fetch(`/api/v1/categories?fields=_id,title,parent(_id)&limit=*`);
-    const json = await res.json();
-
-    this.setState(
-      {
-        ...this.getState(),
-        categories: json.result.items,
-      },
-      'Получили список категорий',
-    );
   }
 
   /**

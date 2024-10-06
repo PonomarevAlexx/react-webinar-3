@@ -1,38 +1,24 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import SideLayout from '../../components/side-layout';
 import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '@bem-react/classname';
-import useTranslate from '../../hooks/use-translate';
-import useSelector from '../../hooks/use-selector';
 import './style.css';
-import useStore from '../../hooks/use-store';
 
-const LoginPanel = () => {
-  const navigate = useNavigate();
+const LoginPanel = props => {
   const btn = cn('btn');
-  const { t } = useTranslate();
-  const store = useStore();
+  const navigate = useNavigate();
 
-  const select = useSelector(state => ({
-    token: state.user.token,
-    name: state.user.name,
-  }));
-
-  const callbacks = {
-    logOut: useCallback(() => store.actions.user.logOut(), [store]),
-  };
-
-  return select.token ? (
+  return props.successfully ? (
     <SideLayout side="end">
-      <Link to={'/profile'}>{`${select.name}`}</Link>
-      <button onClick={callbacks.logOut} className={btn()}>
-        {t('btn.exit')}
+      <Link to={'/profile'}>{`${props.name}`}</Link>
+      <button onClick={props.logOut} className={btn()}>
+        {props.t('btn.exit')}
       </button>
     </SideLayout>
   ) : (
     <SideLayout side="end">
       <button onClick={() => navigate('/login')} className={btn()}>
-        {t('btn.enter')}
+        {props.t('btn.enter')}
       </button>
     </SideLayout>
   );

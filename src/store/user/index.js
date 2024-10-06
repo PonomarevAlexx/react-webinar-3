@@ -8,6 +8,7 @@ class UserState extends StoreModule {
       email: '',
       token: '',
       waiting: false,
+      successfully: false,
       error: '',
     };
   }
@@ -28,7 +29,7 @@ class UserState extends StoreModule {
 
       if (!res.ok) {
         const { error } = await res.json();
-        throw new Error(error.message);
+        throw new Error(error.data.issues[0].message);
       }
 
       const json = await res.json();
@@ -38,6 +39,7 @@ class UserState extends StoreModule {
         email: json.result?.user.email,
         token: json.result?.token,
         waiting: false,
+        successfully: true,
         error: '',
       });
 
@@ -46,6 +48,7 @@ class UserState extends StoreModule {
       this.setState({
         ...this.getState(),
         waiting: false,
+        successfully: false,
         error: error.message,
       });
       console.error(error.message);
@@ -78,6 +81,7 @@ class UserState extends StoreModule {
         email: '',
         token: '',
         waiting: false,
+        successfully: false,
         error: '',
       });
 
@@ -85,6 +89,7 @@ class UserState extends StoreModule {
     } catch (error) {
       this.setState({
         waiting: false,
+        successfully: false,
       });
       console.error(error);
     }
@@ -115,6 +120,7 @@ class UserState extends StoreModule {
         email: json.result.email,
         token: token,
         waiting: false,
+        successfully: true,
         error: '',
       });
     } catch (e) {
@@ -123,6 +129,13 @@ class UserState extends StoreModule {
       });
       console.error(e);
     }
+  }
+
+  deleteError() {
+    this.setState({
+      ...this.getState(),
+      error: '',
+    });
   }
 }
 

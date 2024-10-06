@@ -1,3 +1,8 @@
 .btn {
-    margin: 13px 20px 13px 0;
+  margin: 13px 20px 13px 0;
+}
+
+.SideLayout_side_end {
+  border-bottom: 1px solid rgb(220, 220, 220, 1);
+  margin: 0;
 }
