@@ -1,0 +1,25 @@
+.commentForm {
+    display: flex;
+    flex-direction: column;
+    margin-top: 26px;
+}
+
+.commentForm-title {
+    font-size: 12px;
+    margin: 0 0 10px;
+}
+
+.commentForm-textarea {
+    width: 100%;
+    min-height: 76px;
+    resize: vertical;
+}
+
+.commentForm-textarea::placeholder {
+    color: #000;
+}
+
+.commentForm-btn {
+    margin-top: 10px;
+    width: 90px;
+}

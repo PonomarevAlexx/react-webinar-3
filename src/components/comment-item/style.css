@@ -1,0 +1,32 @@
+.commentItem {
+    margin-top: 30px;
+}
+
+.commentItem-header {
+    display: flex;
+}
+
+.commentItem-author-name {
+    font-size: 12px;
+    font-weight: bold;
+    padding-right: 15px;
+    padding-bottom: 10px;
+}
+
+.commentItem-date {
+    font-size: 12px;
+    color: rgb(102, 102, 102)
+}
+
+.commentItem-comment-text {
+    font-size: 14px;
+    padding-bottom: 10px;
+}
+
+.commentItem-btn {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    color: rgb(71, 138, 246);
+    padding: 0;
+}

@@ -1,0 +1,14 @@
+.commentNotAuth {
+  font-size: 16px;
+  display: flex;
+}
+
+.commentNotAuth-link {
+  color: blue;
+}
+
+.commentNotAuth-btn {
+  border: none;
+  background-color: transparent;
+  text-decoration-line: underline;
+}
