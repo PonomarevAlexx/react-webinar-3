@@ -1,7 +1,6 @@
 import useTranslate from '../../hooks/use-translate';
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import CommentsSection from '../../components/comments-section';
-import CommentItem from '../../components/comment-item';
 import CommentList from '../../components/comment-list';
 import { useSelector as useSelectorRedux } from 'react-redux';
 import shallowEqual from 'shallowequal';
@@ -12,6 +11,8 @@ import commentsTree from '../../utils/comment-to-tree';
 
 function CommentsContainer() {
   const { t } = useTranslate();
+
+  const [isOpenedFormAnswer, setisOpenedFormAnswer] = useState(null);
 
   const select = useSelectorRedux(
     state => ({
@@ -29,14 +30,23 @@ function CommentsContainer() {
     exists: state.session.exists,
   }));
 
-//   const renders = {
-//     item: useCallback(item => <CommentItem item={item} labelAdd={t('comment.btnAnswer')} />),
-//   };
+  //   const renders = {
+  //     item: useCallback(item => <CommentItem item={item} labelAdd={t('comment.btnAnswer')} />),
+  //   };
 
   return (
     <CommentsSection t={t} count={select.count}>
-      <CommentList list={list}  labelAdd={t('comment.btnAnswer')}/>
-      {!selectStore.exists ? <CommentNotAuth t={t} /> : <CommentForm />}
+      <CommentList
+        isOpenedFormAnswer={isOpenedFormAnswer}
+        setOpenAnswer={setisOpenedFormAnswer}
+        list={list}
+        labelAdd={t('comment.btnAnswer')}
+      />
+      {!selectStore.exists ? (
+        <CommentNotAuth t={t} />
+      ) : (
+        <CommentForm title={t('comment.titleFormComment')} />
+      )}
     </CommentsSection>
   );
 }

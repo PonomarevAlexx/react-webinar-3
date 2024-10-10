@@ -25,6 +25,7 @@
   "session.signOut": "Выход",
   "comment.title": "Комментарии",
   "comment.btnAnswer": "Ответить",
-  "comment.signIn": "Войдите"
-
+  "comment.signIn": "Войдите",
+  "comment.titleFormAnswer": "Новый ответ",
+  "comment.titleFormComment": "Новый Комментарий"
 }

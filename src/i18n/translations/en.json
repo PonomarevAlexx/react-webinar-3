@@ -23,5 +23,7 @@
   "session.signOut": "Sign Out",
   "comment.title": "Comments",
   "comment.btnAnswer": "To Answer",
-  "comment.signIn": "Sign In"
+  "comment.signIn": "Sign In",
+  "comment.titleFormAnswer" : "New Answer",
+  "comment.titleFormComment" : "New comment"
 }
