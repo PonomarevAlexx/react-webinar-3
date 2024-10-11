@@ -4,7 +4,7 @@ import CommentItem from '../comment-item';
 import { cn } from '@bem-react/classname';
 import './style.css';
 
-function CommentList({ list, child, labelAdd, isOpenedFormAnswer, setOpenAnswer }) {
+function CommentList({ list, child, labelAdd, isOpenedFormAnswer, setOpenAnswer, exists}) {
   const comentList = cn('comentList');
   return (
     <div className={comentList({ child: child })}>
@@ -15,6 +15,7 @@ function CommentList({ list, child, labelAdd, isOpenedFormAnswer, setOpenAnswer 
             setOpenAnswer={setOpenAnswer}
             item={item}
             labelAdd={labelAdd}
+            exists={exists}
           />
         </div>
       ))}

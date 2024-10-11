@@ -41,11 +41,16 @@ function CommentsContainer() {
         setOpenAnswer={setisOpenedFormAnswer}
         list={list}
         labelAdd={t('comment.btnAnswer')}
+        exists={selectStore.exists}
       />
       {!selectStore.exists ? (
-        <CommentNotAuth t={t} />
+        <CommentNotAuth
+          t={t}
+          text={t('comment.notAuthComment')}
+          isOpenedFormAnswer={isOpenedFormAnswer}
+        />
       ) : (
-        <CommentForm title={t('comment.titleFormComment')} />
+        <CommentForm title={t('comment.titleFormComment')} t={t}/>
       )}
     </CommentsSection>
   );

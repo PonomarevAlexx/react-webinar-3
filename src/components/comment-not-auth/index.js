@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import './style.css';
 
-function CommentNotAuth({ t }) {
+function CommentNotAuth({ t, text, isOpenedFormAnswer, setOpenAnswer }) {
   const commentNotAuth = cn('commentNotAuth');
 
   return (
@@ -11,8 +11,10 @@ function CommentNotAuth({ t }) {
       <Link className={commentNotAuth('link')} to="/login">
         {t('comment.signIn')}
       </Link>
-      <div>, чтобы иметь возможность комментировать</div>
-      {/* <button className={commentNotAuth('btn')}>Отмена</button> */}
+      <div>, {text}</div>
+      {!isOpenedFormAnswer && (
+        <button onClick={() => setOpenAnswer(null)} className={commentNotAuth('btn')}>{t('comment.cancel')}</button>
+      )}
     </div>
   );
 }

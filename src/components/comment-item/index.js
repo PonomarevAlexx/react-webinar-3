@@ -5,10 +5,12 @@ import formatCommentTime from '../../utils/formatCommentTime';
 import CommentList from '../comment-list';
 import CommentForm from '../comment-form';
 import useTranslate from '../../hooks/use-translate';
+import CommentNotAuth from '../comment-not-auth';
 
-function CommentItem({ item, labelAdd, isOpenedFormAnswer, setOpenAnswer }) {
+function CommentItem({ item, labelAdd, isOpenedFormAnswer, setOpenAnswer, exists }) {
   const commentItem = cn('commentItem');
   const { t } = useTranslate();
+  console.log(exists);
 
   return (
     <div className={commentItem()}>
@@ -20,13 +22,18 @@ function CommentItem({ item, labelAdd, isOpenedFormAnswer, setOpenAnswer }) {
       <button onClick={() => setOpenAnswer(item._id)} className={commentItem('btn')}>
         {labelAdd}
       </button>
-      {isOpenedFormAnswer === item._id && (
-        <CommentForm
-          title={t('comment.titleFormAnswer')}
-          setOpenAnswer={setOpenAnswer}
-          isOpenedFormAnswer={isOpenedFormAnswer}
-        />
-      )}
+      {isOpenedFormAnswer === item._id ? (
+        exists ? (
+          <CommentForm
+            t={t}
+            title={t('comment.titleFormAnswer')}
+            setOpenAnswer={setOpenAnswer}
+            isOpenedFormAnswer={isOpenedFormAnswer}
+          />
+        ) : (
+          <CommentNotAuth t={t} text={t('comment.notAuthAnswer')} setOpenAnswer={setOpenAnswer} />
+        )
+      ) : null}
       {item.children && (
         <CommentList
           list={item.children}
@@ -34,6 +41,7 @@ function CommentItem({ item, labelAdd, isOpenedFormAnswer, setOpenAnswer }) {
           setOpenAnswer={setOpenAnswer}
           labelAdd={labelAdd}
           child
+          exists={exists}
         />
       )}
     </div>

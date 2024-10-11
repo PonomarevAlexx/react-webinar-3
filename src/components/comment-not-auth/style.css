@@ -9,6 +9,7 @@
 }
 
 .commentNotAuth-btn {
+  cursor: pointer;
   border: none;
   background-color: transparent;
   text-decoration-line: underline;

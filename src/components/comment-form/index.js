@@ -2,7 +2,7 @@ import { memo, useState } from 'react';
 import './style.css';
 import { cn } from '@bem-react/classname';
 
-function CommentForm({ title, isOpenedFormAnswer, setOpenAnswer }) {
+function CommentForm({ t, title, isOpenedFormAnswer, setOpenAnswer }) {
   const commentForm = cn('commentForm');
   const [text, setText] = useState('');
 
@@ -17,10 +17,10 @@ function CommentForm({ title, isOpenedFormAnswer, setOpenAnswer }) {
           onChange={e => setText(e.target.value)}
         ></textarea>
         <div className={commentForm('btns')}>
-          <button className={commentForm('btn')}>Sent</button>
+          <button className={commentForm('btn')}>{t('comment.send')}</button>
           {isOpenedFormAnswer && (
             <button onClick={() => setOpenAnswer(null)} className={commentForm('btn')}>
-              Cancel
+              {t('comment.cancel')}
             </button>
           )}
         </div>

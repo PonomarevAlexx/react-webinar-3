@@ -25,5 +25,9 @@
   "comment.btnAnswer": "To Answer",
   "comment.signIn": "Sign In",
   "comment.titleFormAnswer" : "New Answer",
-  "comment.titleFormComment" : "New comment"
+  "comment.titleFormComment" : "New comment",
+  "comment.notAuthAnswer": "to be able to answer",
+  "comment.notAuthComment": "to be able to comment",
+  "comment.cancel": "Cancel",
+  "comment.send": "Send"
 }

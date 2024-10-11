@@ -27,5 +27,9 @@
   "comment.btnAnswer": "Ответить",
   "comment.signIn": "Войдите",
   "comment.titleFormAnswer": "Новый ответ",
-  "comment.titleFormComment": "Новый Комментарий"
+  "comment.titleFormComment": "Новый Комментарий",
+  "comment.notAuthAnswer": " чтобы иметь возможность ответить",
+  "comment.notAuthComment": " чтобы иметь возможность комменитировать",
+  "comment.cancel": "Отмена",
+  "comment.send": "Отправить"
 }
