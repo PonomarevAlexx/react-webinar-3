@@ -1,6 +1,6 @@
 // Начальное состояние
 export const initialState = {
-  data: [],
+  items: [],
   count: 0,
   waiting: false, // признак ожидания загрузки
 };
@@ -12,10 +12,11 @@ function reducer(state = initialState, action) {
       return { ...state, data: {}, waiting: true };
 
     case 'comment/load-success':
+      const { items, count } = action.payload;
       return {
         ...state,
-        data: action.payload.data,
-        count: action.payload.data.count,
+        items,
+        count,
         waiting: false,
       };
 
@@ -26,7 +27,7 @@ function reducer(state = initialState, action) {
       console.log('hi', action.payload.data, state.data);
       return {
         ...state,
-        data: [...state.data, action.payload.data],
+        items: [...state.items, action.payload],
         count: state.count + 1,
         waiting: false,
       };

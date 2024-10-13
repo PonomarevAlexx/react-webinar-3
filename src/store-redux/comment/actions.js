@@ -8,9 +8,10 @@ export default {
         const res = await services.api.request({
           url: `/api/v1/comments?fields=items(_id,text,dateCreate,author(profile(name)),parent(_id,_type),isDeleted),count&limit=*&search[parent]=${id}`,
         });
+        const { count, items } = res.data.result;
         console.log(res.data.result);
         // Коммент загружен успешно
-        dispatch({ type: 'comment/load-success', payload: { data: res.data.result } });
+        dispatch({ type: 'comment/load-success', payload: { count, items } });
       } catch (e) {
         //Ошибка загрузки
         dispatch({ type: 'comment/load-error' });

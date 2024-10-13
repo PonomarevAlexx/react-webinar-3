@@ -24,12 +24,12 @@ function CommentsContainer() {
   const select = useSelectorRedux(
     state => ({
       count: state.comment.count,
-      list: state.comment.data.items,
+      list: state.comment.items,
       waiting: state.comment.waiting,
     }),
     shallowEqual,
   );
-console.log(select.list)
+console.log(select.count, select.list)
   const tree = useMemo(() => listToTree(select.list)[0]?.children || [], [select.list]);
   const list = useMemo(
     () =>
@@ -39,6 +39,7 @@ console.log(select.list)
       })),
     [select.list],
   );
+
 
   const callbacks = {
     submitComment: useCallback((text, id) => {
