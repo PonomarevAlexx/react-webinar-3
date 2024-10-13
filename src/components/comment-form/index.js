@@ -1,17 +1,34 @@
-import { memo, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import './style.css';
 import { cn } from '@bem-react/classname';
 
-function CommentForm({ t, title, isOpenedFormAnswer, setOpenAnswer }) {
+function CommentForm({ t, title, isOpenedFormAnswer, setOpenAnswer, submitComment }) {
   const commentForm = cn('commentForm');
   const [text, setText] = useState('');
+  const formRef = useRef();
+
+  useEffect(() => {
+    if (isOpenedFormAnswer) {
+      formRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [formRef]);
+
+  const handelSubmit = e => {
+    e.preventDefault();
+    setText('');
+
+    if (text.trim()) {
+      submitComment(text, isOpenedFormAnswer);
+      setText('');
+      if (isOpenedFormAnswer) setOpenAnswer(null);
+    }
+  };
 
   return (
     <>
-      <form className={commentForm()}>
+      <form ref={formRef} className={commentForm()} onSubmit={handelSubmit}>
         <h5 className={commentForm('title')}> {title}</h5>
         <textarea
-          placeholder="Text"
           className={commentForm('textarea')}
           value={text}
           onChange={e => setText(e.target.value)}

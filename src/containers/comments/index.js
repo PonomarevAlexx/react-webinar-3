@@ -7,10 +7,17 @@ import shallowEqual from 'shallowequal';
 import useSelector from '../../hooks/use-selector';
 import CommentNotAuth from '../../components/comment-not-auth';
 import CommentForm from '../../components/comment-form';
-import commentsTree from '../../utils/comment-to-tree';
+import listToTree from '../../utils/list-to-tree';
+import treeToList from '../../utils/tree-to-list';
+import commentsActions from '../../store-redux/comment/actions';
+import { useDispatch } from 'react-redux';
 
 function CommentsContainer() {
   const { t } = useTranslate();
+  const dispatch = useDispatch();
+
+  const MAX_LEVEL_COMMENT = 4;
+  const GAP_COMMENT_PX = 30;
 
   const [isOpenedFormAnswer, setisOpenedFormAnswer] = useState(null);
 
@@ -22,21 +29,41 @@ function CommentsContainer() {
     }),
     shallowEqual,
   );
+console.log(select.list)
+  const tree = useMemo(() => listToTree(select.list)[0]?.children || [], [select.list]);
+  const list = useMemo(
+    () =>
+      treeToList(tree, (item, level) => ({
+        ...item,
+        level,
+      })),
+    [select.list],
+  );
 
-  const list = useMemo(() => commentsTree(select.list), [select.list]);
-  console.log(select.list);
+  const callbacks = {
+    submitComment: useCallback((text, id) => {
+      dispatch(
+        commentsActions.post({
+          text,
+          parent: {
+            _id: id,
+            _type: id ? 'comment' : 'article',
+          },
+        }),
+      );
+    }, []),
+  };
 
   const selectStore = useSelector(state => ({
     exists: state.session.exists,
   }));
 
-  //   const renders = {
-  //     item: useCallback(item => <CommentItem item={item} labelAdd={t('comment.btnAnswer')} />),
-  //   };
-
   return (
     <CommentsSection t={t} count={select.count}>
       <CommentList
+        submitComment={callbacks.submitComment}
+        gap={GAP_COMMENT_PX}
+        level={MAX_LEVEL_COMMENT}
         isOpenedFormAnswer={isOpenedFormAnswer}
         setOpenAnswer={setisOpenedFormAnswer}
         list={list}
@@ -50,7 +77,13 @@ function CommentsContainer() {
           isOpenedFormAnswer={isOpenedFormAnswer}
         />
       ) : (
-        <CommentForm title={t('comment.titleFormComment')} t={t}/>
+        !isOpenedFormAnswer && (
+          <CommentForm
+            submitComment={callbacks.submitComment}
+            title={t('comment.titleFormComment')}
+            t={t}
+          />
+        )
       )}
     </CommentsSection>
   );

@@ -19,6 +19,8 @@
 }
 
 .commentItem-comment-text {
+    word-break: break-all;
+    overflow-wrap: break-word;
     font-size: 14px;
     padding-bottom: 10px;
 }

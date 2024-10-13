@@ -28,7 +28,7 @@ function Article() {
     //store.actions.article.load(params.id);
     dispatch(articleActions.load(params.id));
     dispatch(commentsActions.load(params.id));
-  }, [params.id]);
+  }, [params.id, ]);
 
   const select = useSelector(
     state => ({
